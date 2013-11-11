@@ -10,7 +10,7 @@ SRC_ROOT = File.join(ROOT, 'src')
 BUILD_ROOT = File.join(ROOT, 'build')
 SOLUTION_FILE = File.join(SRC_ROOT, "NLog.RollbarSharp.sln")
 PROJECT_DIR = SRC_ROOT
-BIN_DIR = File.join(SRC_ROOT, "NLog.RollbarSharp/bin/#{BUILD_CONFIGURATION}/")
+BIN_DIR = File.join(PROJECT_DIR, "bin/#{BUILD_CONFIGURATION}/")
 PUBLISH_DIR = File.join(BUILD_ROOT, 'publish')
 CHANGELOG_FILE = File.join(ROOT, 'CHANGELOG.md')
 
