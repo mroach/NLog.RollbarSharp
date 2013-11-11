@@ -9,7 +9,7 @@ You'll need to edit your configuration file that holds your NLog settings. For A
 ```xml
 <nlog>
     <extensions>
-        <add addembly="NLog.RollbarSharp" />
+        <add assembly="NLog.RollbarSharp" />
     </extensions>
     <targets>
         <target xsi:type="RollbarSharp" name="rollbar" />
