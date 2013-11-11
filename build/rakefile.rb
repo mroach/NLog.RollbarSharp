@@ -9,11 +9,10 @@ ROOT = File.expand_path('../../', __FILE__)
 SRC_ROOT = File.join(ROOT, 'src')
 BUILD_ROOT = File.join(ROOT, 'build')
 SOLUTION_FILE = File.join(SRC_ROOT, "NLog.RollbarSharp.sln")
-PROJECT_DIR = File.join(SRC_ROOT, "NLog.RollbarSharp")
+PROJECT_DIR = SRC_ROOT
 BIN_DIR = File.join(SRC_ROOT, "NLog.RollbarSharp/bin/#{BUILD_CONFIGURATION}/")
 PUBLISH_DIR = File.join(BUILD_ROOT, 'publish')
 CHANGELOG_FILE = File.join(ROOT, 'CHANGELOG.md')
-NSPEC_RUNNER = File.join(Dir[File.join(SRC_ROOT, "packages", "nspec.*", "tools")].first, "NSpecRunner.exe")
 
 BUILD_PROPERTIES = {
   :configuration => BUILD_CONFIGURATION
