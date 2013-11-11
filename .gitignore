@@ -1,0 +1,13 @@
+bin
+obj
+*.user
+*.suo
+*.cache
+*.log
+*.resharper
+packages
+
+# ignore publish stuff
+build/publish/lib/*/*.dll
+build/*.nupkg
+build/publish/*.nuspec
