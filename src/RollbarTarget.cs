@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using NLog.Common;
+﻿using NLog.Common;
 using NLog.Layouts;
 using NLog.Targets;
 using RollbarSharp;
@@ -21,9 +20,12 @@ namespace NLog.RollbarSharp
 
         public Layout Framework { get; set; }
         
-        [DefaultValue("${message}")]
         public Layout Title { get; set; }
 
+        public RollbarTarget()
+        {
+            Title = "${message}";
+        }
         
         protected override void Write(LogEventInfo logEvent)
         {
