@@ -19,14 +19,14 @@ namespace NLog.RollbarSharp
         public Layout Language { get; set; }
 
         public Layout Framework { get; set; }
-        
+
         public Layout Title { get; set; }
 
         public RollbarTarget()
         {
             Title = "${message}";
         }
-        
+
         protected override void Write(LogEventInfo logEvent)
         {
             var client = CreateClient(logEvent);
@@ -51,27 +51,26 @@ namespace NLog.RollbarSharp
         /// <returns></returns>
         private RollbarClient CreateClient(LogEventInfo logEvent)
         {
-            var client = new RollbarClient();
-            client.RequestStarting += RollbarClientRequestStarting;
-            client.RequestCompleted += RollbarClientRequestCompleted;
-
-            if (!string.IsNullOrEmpty(AccessToken))
-                client.Configuration.AccessToken = AccessToken;
+            var configuration = new Configuration(AccessToken);
 
             if (!string.IsNullOrEmpty(Endpoint))
-                client.Configuration.Endpoint = Endpoint;
+                configuration.Endpoint = Endpoint;
 
             if (Environment != null)
-                client.Configuration.Environment = Environment.Render(logEvent);
+                configuration.Environment = Environment.Render(logEvent);
 
             if (Platform != null)
-                client.Configuration.Platform = Platform.Render(logEvent);
+                configuration.Platform = Platform.Render(logEvent);
 
             if (Language != null)
-                client.Configuration.Language = Language.Render(logEvent);
+                configuration.Language = Language.Render(logEvent);
 
             if (Framework != null)
-                client.Configuration.Framework = Framework.Render(logEvent);
+                configuration.Framework = Framework.Render(logEvent);
+
+            var client = new RollbarClient(configuration);
+            client.RequestStarting += RollbarClientRequestStarting;
+            client.RequestCompleted += RollbarClientRequestCompleted;
 
             return client;
         }
@@ -83,7 +82,7 @@ namespace NLog.RollbarSharp
         /// <param name="args"></param>
         private static void RollbarClientRequestStarting(object source, RequestStartingEventArgs args)
         {
-            var client = (RollbarClient) source;
+            var client = (RollbarClient)source;
             InternalLogger.Debug("Sending request to {0}: {1}", client.Configuration.Endpoint, args.Payload);
         }
 
