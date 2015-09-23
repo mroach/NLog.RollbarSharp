@@ -1,4 +1,5 @@
-﻿using NLog.Common;
+﻿using System;
+using NLog.Common;
 using NLog.Layouts;
 using NLog.Targets;
 using RollbarSharp;
@@ -29,18 +30,25 @@ namespace NLog.RollbarSharp
 
         protected override void Write(LogEventInfo logEvent)
         {
-            var client = CreateClient(logEvent);
-            var level = ConvertLogLevel(logEvent.Level);
-            var title = Title.Render(logEvent);
+            try
+            {
+                var client = CreateClient(logEvent);
+                var level = ConvertLogLevel(logEvent.Level);
+                var title = Title.Render(logEvent);
 
-            var notice = logEvent.Exception != null
-                             ? client.NoticeBuilder.CreateExceptionNotice(logEvent.Exception)
-                             : client.NoticeBuilder.CreateMessageNotice(logEvent.FormattedMessage);
+                var notice = logEvent.Exception != null
+                                 ? client.NoticeBuilder.CreateExceptionNotice(logEvent.Exception)
+                                 : client.NoticeBuilder.CreateMessageNotice(logEvent.FormattedMessage);
 
-            notice.Level = level;
-            notice.Title = title;
+                notice.Level = level;
+                notice.Title = title;
 
-            client.Send(notice);
+                client.Send(notice);
+            }
+            catch (Exception exception)
+            {
+                InternalLogger.Error(exception.ToString());
+            }
         }
 
         /// <summary>
