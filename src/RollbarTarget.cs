@@ -40,7 +40,7 @@ namespace NLog.RollbarSharp
             notice.Level = level;
             notice.Title = title;
 
-            client.Send(notice);
+            client.Send(notice,null);
         }
 
         /// <summary>
